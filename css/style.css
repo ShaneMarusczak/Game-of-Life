@@ -17,8 +17,8 @@ html {
 }
 
 .cell {
-  height: 25px;
-  width: 25px;
+  height: 17px;
+  width: 17px;
   border: 1px dimgrey solid;
 }
 
@@ -28,4 +28,17 @@ html {
 
 .alive {
   background-color: tan;
+}
+
+.hidden {
+  display: none;
+}
+
+.bad {
+  color: red;
+}
+
+input:not([type]),
+input[type="text"] {
+  width: 20px;
 }

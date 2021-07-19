@@ -1,8 +1,10 @@
-(() => {
+(function () {
   let gameStarted = false;
+  let gameCanStart = true;
+  let gridBuilt = false;
   let gameSpeed = 200;
-  const rows = 40;
-  const cols = 40;
+  let rows = 20;
+  let cols = 20;
   const gameBoard = [];
   const gameBoard_UI = document.getElementById("gameBoard_UI");
 
@@ -118,15 +120,47 @@
   }
 
   function start() {
-    if (!gameStarted) {
+    if (!gameStarted && gameCanStart && gridBuilt) {
       gameStarted = true;
+      document.getElementById("start").disabled = true;
       gameTick();
     }
   }
 
-  (() => {
-    document.getElementById("start").addEventListener("click", start);
+  function buildGrid(e) {
+    if (
+      !gameStarted &&
+      gameCanStart &&
+      !gridBuilt &&
+      document.getElementById("rowsInput").value.length > 0 &&
+      document.getElementById("colsInput").value.length > 0
+    ) {
+      rows = Number(document.getElementById("rowsInput").value);
+      cols = Number(document.getElementById("colsInput").value);
+      document.getElementById("rowsInput").disabled = true;
+      document.getElementById("colsInput").disabled = true;
+      e.target.disabled = true;
+      buildGridInternal();
+      gridBuilt = true;
+    }
+  }
 
+  function testInput(e) {
+    let regex = /^\d{0,2}$/;
+    if (
+      regex.test(e.target.value) &&
+      Number(e.target.value) <= 50 &&
+      Number(e.target.value) > 0
+    ) {
+      document.getElementById("invalid").classList.add("hidden");
+      gameCanStart = true;
+    } else {
+      document.getElementById("invalid").classList.remove("hidden");
+      gameCanStart = false;
+    }
+  }
+
+  function buildGridInternal() {
     for (let x = 0; x < cols; x++) {
       gameBoard.push([]);
       const col = document.createElement("div");
@@ -144,5 +178,12 @@
         cell.addEventListener("click", () => newCell.handleClick());
       }
     }
+  }
+
+  (function () {
+    document.getElementById("start").addEventListener("click", start);
+    document.getElementById("buildGrid").addEventListener("click", buildGrid);
+    document.getElementById("rowsInput").addEventListener("input", testInput);
+    document.getElementById("colsInput").addEventListener("input", testInput);
   })();
 })();
