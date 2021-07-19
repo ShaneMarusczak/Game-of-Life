@@ -131,24 +131,9 @@
 
   function buildGrid(e) {
     if (!gameStarted && gameCanStart && !gridBuilt) {
-      if (document.getElementById("speedInput").value != "") {
-        gameSpeed = Number(document.getElementById("speedInput").value);
-      } else {
-        gameSpeed = 200;
-        document.getElementById("speedInput").value = "200";
-      }
-      if (rowsInput.value != "") {
-        rows = Number(rowsInput.value);
-      } else {
-        rows = 20;
-        rowsInput.value = "20";
-      }
-      if (colsInput.value != "") {
-        cols = Number(colsInput.value);
-      } else {
-        cols = 20;
-        colsInput.value = "20";
-      }
+      gameSpeed = Number(document.getElementById("speedInput").value);
+      rows = Number(rowsInput.value);
+      cols = Number(colsInput.value);
       rowsInput.disabled = true;
       colsInput.disabled = true;
       e.target.disabled = true;
@@ -222,6 +207,9 @@
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
     rowsInput.addEventListener("input", testInput);
     colsInput.addEventListener("input", testInput);
+    colsInput.value = "20";
+    rowsInput.value = "20";
+    document.getElementById("speedInput").value = "200";
     document
       .getElementById("speedInput")
       .addEventListener("input", testSpeedInput);
