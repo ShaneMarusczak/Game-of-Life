@@ -1,6 +1,6 @@
 (function () {
   let gameStarted = false;
-  let gameCanStart = true;
+  let gridCanBuild = true;
   let gridBuilt = false;
   let gameSpeed = 200;
   let rows = 20;
@@ -123,7 +123,7 @@
   }
 
   function start() {
-    if (!gameStarted && gameCanStart && gridBuilt) {
+    if (!gameStarted && gridCanBuild && gridBuilt) {
       gameStarted = true;
       document.getElementById("start").disabled = true;
       gameTick();
@@ -131,7 +131,7 @@
   }
 
   function buildGrid(e) {
-    if (!gameStarted && gameCanStart && !gridBuilt) {
+    if (!gameStarted && gridCanBuild && !gridBuilt) {
       gameSpeed = Number(speedInput.value);
       rows = Number(rowsInput.value);
       cols = Number(colsInput.value);
@@ -153,12 +153,12 @@
       e.target.value != ""
     ) {
       document.getElementById("invalid").classList.add("hidden");
-      gameCanStart = true;
+      gridCanBuild = true;
     } else {
       document.getElementById("invalid").classList.remove("hidden");
       document.getElementById("invalid").textContent =
         "Rows and Columns are limited to 50";
-      gameCanStart = false;
+      gridCanBuild = false;
     }
   }
 
@@ -171,13 +171,13 @@
       e.target.value != ""
     ) {
       document.getElementById("invalid").classList.add("hidden");
-      gameCanStart = true;
+      gridCanBuild = true;
     } else {
       document.getElementById("invalid").classList.remove("hidden");
       document.getElementById("invalid").textContent =
         "Valid range is 1-999 whole ms";
 
-      gameCanStart = false;
+      gridCanBuild = false;
     }
   }
 
