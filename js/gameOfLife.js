@@ -145,7 +145,6 @@
       e.target.disabled = true;
       speedInput.disabled = true;
       document.getElementById("start").disabled = false;
-      document.getElementById("header-tag").classList.remove("header-on-load");
       document.getElementById("intro-text").classList.add("hidden");
       buildGridInternal();
       gridBuilt = true;
