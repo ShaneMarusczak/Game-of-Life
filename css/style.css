@@ -45,5 +45,6 @@ header {
 
 input:not([type]),
 input[type="text"] {
-  width: 20px;
+  width: 30px;
+  text-align: center;
 }

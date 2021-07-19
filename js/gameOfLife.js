@@ -139,9 +139,16 @@
     ) {
       rows = Number(rowsInput.value);
       cols = Number(colsInput.value);
+      if (document.getElementById("speedInput").value != "") {
+        gameSpeed = Number(document.getElementById("speedInput").value);
+      } else {
+        gameSpeed = 200;
+        document.getElementById("speedInput").value = "200";
+      }
       rowsInput.disabled = true;
       colsInput.disabled = true;
       e.target.disabled = true;
+      document.getElementById("speedInput").disabled = true;
       buildGridInternal();
       gridBuilt = true;
     }
@@ -152,7 +159,24 @@
     if (
       regex.test(e.target.value) &&
       Number(e.target.value) <= 50 &&
-      Number(e.target.value) > 0
+      Number(e.target.value) > 0 &&
+      e.target.value != ""
+    ) {
+      document.getElementById("invalid").classList.add("hidden");
+      gameCanStart = true;
+    } else {
+      document.getElementById("invalid").classList.remove("hidden");
+      gameCanStart = false;
+    }
+  }
+
+  function testSpeedInput(e) {
+    let regex = /^[+]?([0-9]+\.?[0-9]*|\.[0-9]+)$/;
+    if (
+      regex.test(e.target.value) &&
+      Number(e.target.value) <= 5 &&
+      Number(e.target.value) > 0 &&
+      e.target.value != ""
     ) {
       document.getElementById("invalid").classList.add("hidden");
       gameCanStart = true;
@@ -189,5 +213,8 @@
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
     rowsInput.addEventListener("input", testInput);
     colsInput.addEventListener("input", testInput);
+    document
+      .getElementById("speedInput")
+      .addEventListener("input", testSpeedInput);
   })();
 })();
