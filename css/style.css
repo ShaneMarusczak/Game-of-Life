@@ -11,7 +11,12 @@ body {
 }
 
 header {
+  text-align: center;
   margin: 10px;
+}
+
+#invalid {
+  margin-top: 10px;
 }
 
 #gameBoard_UI {
@@ -46,5 +51,16 @@ header {
 input:not([type]),
 input[type="text"] {
   width: 30px;
+  height: 25px;
   text-align: center;
+  margin-right: 2px;
+}
+
+button {
+  width: 75px;
+  height: 30px;
+}
+
+.header-on-load {
+  margin-top: 20vh;
 }

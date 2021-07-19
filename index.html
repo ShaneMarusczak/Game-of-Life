@@ -9,21 +9,31 @@
     <title>Game of Life</title>
   </head>
   <body>
-    <header>
+    <header id="header-tag" class="header-on-load">
       <h1>Conway's Game of Life</h1>
+      <div id="intro-text">
+        <p>
+          Please enter number of rows, number of columns and generation
+          lifespan.
+        </p>
+        <p>
+          Build Grid will lock in settings. Start begins your game!
+        </p>
+      </div>
     </header>
     <menu>
-      <p id="invalid" class="bad hidden">BAD</p>
       <label for="rows">Rows:</label>
-      <input type="text" id="rowsInput" name="rows" value="20" />
+      <input type="text" id="rowsInput" name="rows" value="30" />
       <label for="cols">Columns:</label>
-      <input type="text" id="colsInput" name="cols" value="20" />
-      <label for="cols">Speed (ms):</label>
+      <input type="text" id="colsInput" name="cols" value="30" />
+      <label for="cols">Lifespan (ms):</label>
       <input type="text" id="speedInput" name="speed" value="200" />
       <button type="button" name="buildGrid" id="buildGrid">Build Grid</button>
       <button type="button" name="start" id="start">Start</button>
       <button type="button" onclick="location.reload()">Reload</button>
     </menu>
+    <p id="invalid" class="bad hidden"></p>
+
     <div class="gameBoardWrapper">
       <div id="gameBoard_UI"></div>
     </div>

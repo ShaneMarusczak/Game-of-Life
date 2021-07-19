@@ -3,8 +3,8 @@
   let gridCanBuild = true;
   let gridBuilt = false;
   let gameSpeed = 200;
-  let rows = 20;
-  let cols = 20;
+  let rows = 30;
+  let cols = 30;
   const gameBoard = [];
   const gameBoard_UI = document.getElementById("gameBoard_UI");
   const rowsInput = document.getElementById("rowsInput");
@@ -17,9 +17,6 @@
 
   const validPosition = (x, y) =>
     x >= 0 && x < cols + 10 && y >= 0 && y < rows + 10;
-
-  const validPositionForUI = (x, y) =>
-    x >= 4 && x < cols + 5 && y >= 4 && y < rows + 5;
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -89,6 +86,9 @@
         this.nextState = true;
       } else {
         this.nextState = false;
+        if (this.aliveNeighbors === 0) {
+          this.enabled = false;
+        }
       }
     }
 
@@ -97,7 +97,12 @@
       if (this.alive) {
         this.setEnable();
       }
-      if (this.x > 5 && this.x < cols + 5 && this.y > 5 && this.y < rows + 5) {
+      if (
+        this.x >= 5 &&
+        this.x < cols + 5 &&
+        this.y >= 5 &&
+        this.y < rows + 5
+      ) {
         getCellElem(this.x, this.y).classList.remove("alive");
         if (this.alive) {
           getCellElem(this.x, this.y).classList.add("alive");
@@ -139,6 +144,9 @@
       colsInput.disabled = true;
       e.target.disabled = true;
       speedInput.disabled = true;
+      document.getElementById("start").disabled = false;
+      document.getElementById("header-tag").classList.remove("header-on-load");
+      document.getElementById("intro-text").classList.add("hidden");
       buildGridInternal();
       gridBuilt = true;
     }
@@ -192,7 +200,7 @@
         const newCell = new Cell(x, y);
         gameBoard[x].push(newCell);
         gameBoard[x][y].setNeighbors();
-        if (x > 5 && x < cols + 5 && y > 5 && y < rows + 5) {
+        if (x >= 5 && x < cols + 5 && y >= 5 && y < rows + 5) {
           const cell = document.createElement("div");
           cell.id = getCellId(x, y);
           cell.classList.add("cell");
@@ -208,9 +216,10 @@
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
     rowsInput.addEventListener("input", testInput);
     colsInput.addEventListener("input", testInput);
-    colsInput.value = "20";
-    rowsInput.value = "20";
+    colsInput.value = "30";
+    rowsInput.value = "30";
     speedInput.value = "200";
     speedInput.addEventListener("input", testSpeedInput);
+    document.getElementById("start").disabled = true;
   })();
 })();
