@@ -46,11 +46,11 @@ p {
 }
 
 .cell:hover {
-  background-color: grey;
+  background-color: dimgrey;
 }
 
 .alive {
-  background-color: dimgrey;
+  background-color: grey;
 }
 
 .hidden {
