@@ -8,7 +8,11 @@
   const gameBoard = [];
   const gameBoard_UI = document.getElementById("gameBoard_UI");
 
-  const validPosition = (x, y) => x >= 0 && x < cols && y >= 0 && y < rows;
+  const validPosition = (x, y) =>
+    x >= 0 && x < cols + 10 && y >= 0 && y < rows + 10;
+
+  const validPositionForUI = (x, y) =>
+    x >= 4 && x < cols + 5 && y >= 4 && y < rows + 5;
 
   const getCellId = (x, y) => "cell-" + x + "-" + y;
 
@@ -48,13 +52,13 @@
           document
             .getElementById(getCellId(this.x, this.y))
             .classList.add("alive");
+          this.setEnable();
         } else {
           document
             .getElementById(getCellId(this.x, this.y))
             .classList.remove("alive");
         }
         this.enabled = true;
-        this.setEnable();
       }
     }
 
@@ -75,7 +79,9 @@
 
     setNextState() {
       this.setAliveNeighborCount();
-      if (
+      if (this.neighbors.length < 5) {
+        this.nextState = false;
+      } else if (
         this.alive &&
         (this.aliveNeighbors === 2 || this.aliveNeighbors === 3)
       ) {
@@ -88,33 +94,35 @@
     }
 
     applyNextState() {
-      document
-        .getElementById(getCellId(this.x, this.y))
-        .classList.remove("alive");
       this.alive = this.nextState;
       if (this.alive) {
+        this.setEnable();
+      }
+      if (this.x > 5 && this.x < cols + 5 && this.y > 5 && this.y < rows + 5) {
         document
           .getElementById(getCellId(this.x, this.y))
-          .classList.add("alive");
-        this.setEnable();
+          .classList.remove("alive");
+        if (this.alive) {
+          document
+            .getElementById(getCellId(this.x, this.y))
+            .classList.add("alive");
+        }
       }
     }
   }
 
   function gameTick() {
-    for (let x = 0; x < cols; x++) {
-      for (let y = 0; y < rows; y++) {
+    const enabledCells = [];
+    for (let x = 0; x < cols + 10; x++) {
+      for (let y = 0; y < rows + 10; y++) {
         if (gameBoard[x][y].enabled) {
           gameBoard[x][y].setNextState();
+          enabledCells.push(gameBoard[x][y]);
         }
       }
     }
-    for (let x = 0; x < cols; x++) {
-      for (let y = 0; y < rows; y++) {
-        if (gameBoard[x][y].enabled) {
-          gameBoard[x][y].applyNextState();
-        }
-      }
+    for (let ec of enabledCells) {
+      ec.applyNextState();
     }
     sleep(gameSpeed).then(() => gameTick());
   }
@@ -161,21 +169,24 @@
   }
 
   function buildGridInternal() {
-    for (let x = 0; x < cols; x++) {
+    for (let x = 0; x < cols + 10; x++) {
       gameBoard.push([]);
       const col = document.createElement("div");
       col.id = "col-" + x;
       col.classList.add("col");
       gameBoard_UI.appendChild(col);
-      for (let y = 0; y < rows; y++) {
+
+      for (let y = 0; y < rows + 10; y++) {
         const newCell = new Cell(x, y);
         gameBoard[x].push(newCell);
         gameBoard[x][y].setNeighbors();
-        const cell = document.createElement("div");
-        cell.id = getCellId(x, y);
-        cell.classList.add("cell");
-        col.appendChild(cell);
-        cell.addEventListener("click", () => newCell.handleClick());
+        if (x > 5 && x < cols + 5 && y > 5 && y < rows + 5) {
+          const cell = document.createElement("div");
+          cell.id = getCellId(x, y);
+          cell.classList.add("cell");
+          col.appendChild(cell);
+          cell.addEventListener("click", () => newCell.handleClick());
+        }
       }
     }
   }
