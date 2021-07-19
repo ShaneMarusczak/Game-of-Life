@@ -19,6 +19,38 @@ header {
   margin: 10px;
 }
 
+#githubicon {
+  position: absolute;
+  top: 40px;
+  right: 10vw;
+  width: 70px;
+  height: 70px;
+  transition: 1.5s;
+  z-index: 0;
+  background-color: transparent;
+  border-radius: 30px;
+}
+
+#githubicon:hover {
+  transform: translateY(-5px);
+  background-color: azure;
+}
+
+#homeIcon {
+  position: absolute;
+  top: 40px;
+  left: 7vw;
+  width: 70px;
+  height: 70px;
+  transition: 1.5s;
+  z-index: 0;
+  background-color: transparent;
+}
+
+#homeIcon:hover {
+  transform: translateY(-5px);
+}
+
 h1 {
   margin: 10px;
 }
