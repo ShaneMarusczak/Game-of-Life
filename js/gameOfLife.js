@@ -171,10 +171,10 @@
   }
 
   function testSpeedInput(e) {
-    let regex = /^[+]?([0-9]+\.?[0-9]*|\.[0-9]+)$/;
+    let regex = /^\d{0,3}$/;
     if (
       regex.test(e.target.value) &&
-      Number(e.target.value) <= 5 &&
+      Number(e.target.value) <= 2000 &&
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
