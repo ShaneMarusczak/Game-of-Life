@@ -1,6 +1,6 @@
 (() => {
   let gameStarted = false;
-  let gameSpeed = 300;
+  let gameSpeed = 200;
   const rows = 40;
   const cols = 40;
   const gameBoard = [];
@@ -15,15 +15,17 @@
   }
 
   class Cell {
-    constructor(x, y, alive) {
+    constructor(x, y) {
       this.x = x;
       this.y = y;
-      this.alive = alive;
+      this.alive = false;
       this.nextState = false;
+      this.enabled = false;
       this.neighbors = [];
+      this.aliveNeighbors = 0;
     }
 
-    calcNeighbors() {
+    setNeighbors() {
       const dirs = [-1, 0, 1];
       for (let dirx of dirs) {
         for (let diry of dirs) {
@@ -31,8 +33,7 @@
             if (dirx === 0 && diry === 0) {
               continue;
             }
-            const cell = gameBoard[this.x + dirx][this.y + diry];
-            this.neighbors.push(cell);
+            this.neighbors.push([this.x + dirx, this.y + diry]);
           }
         }
       }
@@ -50,19 +51,34 @@
             .getElementById(getCellId(this.x, this.y))
             .classList.remove("alive");
         }
+        this.enabled = true;
+        this.setEnable();
+      }
+    }
+
+    setAliveNeighborCount() {
+      this.aliveNeighbors = 0;
+      for (let n of this.neighbors) {
+        if (gameBoard[n[0]][n[1]].alive) {
+          this.aliveNeighbors++;
+        }
+      }
+    }
+
+    setEnable() {
+      for (let n of this.neighbors) {
+        gameBoard[n[0]][n[1]].enabled = true;
       }
     }
 
     setNextState() {
-      let aliveNeighbors = 0;
-      for (let n of this.neighbors) {
-        if (n.alive) {
-          aliveNeighbors++;
-        }
-      }
-      if (this.alive && (aliveNeighbors === 2 || aliveNeighbors == 3)) {
+      this.setAliveNeighborCount();
+      if (
+        this.alive &&
+        (this.aliveNeighbors === 2 || this.aliveNeighbors === 3)
+      ) {
         this.nextState = true;
-      } else if (!this.alive && aliveNeighbors === 3) {
+      } else if (!this.alive && this.aliveNeighbors === 3) {
         this.nextState = true;
       } else {
         this.nextState = false;
@@ -78,6 +94,7 @@
         document
           .getElementById(getCellId(this.x, this.y))
           .classList.add("alive");
+        this.setEnable();
       }
     }
   }
@@ -85,12 +102,16 @@
   function gameTick() {
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
-        gameBoard[x][y].setNextState();
+        if (gameBoard[x][y].enabled) {
+          gameBoard[x][y].setNextState();
+        }
       }
     }
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
-        gameBoard[x][y].applyNextState();
+        if (gameBoard[x][y].enabled) {
+          gameBoard[x][y].applyNextState();
+        }
       }
     }
     sleep(gameSpeed).then(() => gameTick());
@@ -113,8 +134,9 @@
       col.classList.add("col");
       gameBoard_UI.appendChild(col);
       for (let y = 0; y < rows; y++) {
-        const newCell = new Cell(x, y, false);
+        const newCell = new Cell(x, y);
         gameBoard[x].push(newCell);
+        gameBoard[x][y].setNeighbors();
         const cell = document.createElement("div");
         cell.id = getCellId(x, y);
         cell.classList.add("cell");
@@ -122,11 +144,5 @@
         cell.addEventListener("click", () => newCell.handleClick());
       }
     }
-    for (let x = 0; x < cols; x++) {
-      for (let y = 0; y < rows; y++) {
-        gameBoard[x][y].calcNeighbors();
-      }
-    }
-    console.log(gameBoard);
   })();
 })();
