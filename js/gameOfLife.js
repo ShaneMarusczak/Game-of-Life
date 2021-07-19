@@ -9,6 +9,7 @@
   const gameBoard_UI = document.getElementById("gameBoard_UI");
   const rowsInput = document.getElementById("rowsInput");
   const colsInput = document.getElementById("colsInput");
+  const speedInput = document.getElementById("speedInput");
 
   const getCellId = (x, y) => "cell-" + x + "-" + y;
 
@@ -131,13 +132,13 @@
 
   function buildGrid(e) {
     if (!gameStarted && gameCanStart && !gridBuilt) {
-      gameSpeed = Number(document.getElementById("speedInput").value);
+      gameSpeed = Number(speedInput.value);
       rows = Number(rowsInput.value);
       cols = Number(colsInput.value);
       rowsInput.disabled = true;
       colsInput.disabled = true;
       e.target.disabled = true;
-      document.getElementById("speedInput").disabled = true;
+      speedInput.disabled = true;
       buildGridInternal();
       gridBuilt = true;
     }
@@ -209,9 +210,7 @@
     colsInput.addEventListener("input", testInput);
     colsInput.value = "20";
     rowsInput.value = "20";
-    document.getElementById("speedInput").value = "200";
-    document
-      .getElementById("speedInput")
-      .addEventListener("input", testSpeedInput);
+    speedInput.value = "200";
+    speedInput.addEventListener("input", testSpeedInput);
   })();
 })();
