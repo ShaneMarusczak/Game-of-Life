@@ -166,6 +166,8 @@
       gameCanStart = true;
     } else {
       document.getElementById("invalid").classList.remove("hidden");
+      document.getElementById("invalid").textContent =
+        "Rows and Columns are limited to 50";
       gameCanStart = false;
     }
   }
@@ -182,6 +184,9 @@
       gameCanStart = true;
     } else {
       document.getElementById("invalid").classList.remove("hidden");
+      document.getElementById("invalid").textContent =
+        "Valid range is 1-999 whole ms";
+
       gameCanStart = false;
     }
   }
