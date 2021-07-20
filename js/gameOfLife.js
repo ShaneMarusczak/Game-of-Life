@@ -22,6 +22,7 @@
       this.enabled = false;
       this.neighbors = [];
       this.aliveNeighbors = 0;
+      this.permaDead = false;
     }
 
     setNeighbors() {
@@ -35,6 +36,9 @@
             this.neighbors.push([this.x + dirx, this.y + diry]);
           }
         }
+      }
+      if (this.neighbors.length < 6) {
+        this.permaDead = true;
       }
     }
 
@@ -68,7 +72,7 @@
 
     setNextState() {
       this.setAliveNeighborCount();
-      if (this.neighbors.length < 5) {
+      if (this.permaDead) {
         this.nextState = false;
       } else if (
         this.alive &&
