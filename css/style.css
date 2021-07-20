@@ -21,8 +21,8 @@ header {
 
 #githubicon {
   position: absolute;
-  top: 40px;
-  right: 10vw;
+  top: 25px;
+  right: 9vw;
   width: 70px;
   height: 70px;
   transition: 1.5s;
@@ -38,8 +38,8 @@ header {
 
 #homeIcon {
   position: absolute;
-  top: 40px;
-  left: 7vw;
+  top: 25px;
+  left: 6vw;
   width: 70px;
   height: 70px;
   transition: 1.5s;

@@ -5,20 +5,13 @@
   let gameSpeed = 200;
   let rows = 30;
   let cols = 30;
+
   const gameBoard = [];
+
   const gameBoard_UI = document.getElementById("gameBoard_UI");
   const rowsInput = document.getElementById("rowsInput");
   const colsInput = document.getElementById("colsInput");
   const speedInput = document.getElementById("speedInput");
-
-  const getCellId = (x, y) => "cell-" + x + "-" + y;
-
-  const getCellElem = (x, y) => document.getElementById(getCellId(x, y));
-
-  const validPosition = (x, y) =>
-    x >= 0 && x < cols + 10 && y >= 0 && y < rows + 10;
-
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   class Cell {
     constructor(x, y) {
@@ -111,6 +104,22 @@
     }
   }
 
+  function getCellId(x, y) {
+    return "cell-" + x + "-" + y;
+  }
+
+  function getCellElem(x, y) {
+    return document.getElementById(getCellId(x, y));
+  }
+
+  function validPosition(x, y) {
+    return x >= 0 && x < cols + 10 && y >= 0 && y < rows + 10;
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   function gameTick() {
     const enabledCells = [];
     for (let x = 0; x < cols + 10; x++) {
@@ -151,7 +160,7 @@
     }
   }
 
-  function testInput(e) {
+  function testRowsInput(e) {
     let regex = /^\d{0,2}$/;
     if (
       regex.test(e.target.value) &&
@@ -163,8 +172,25 @@
       gridCanBuild = true;
     } else {
       document.getElementById("invalid").classList.remove("hidden");
+      document.getElementById("invalid").textContent = "Rows limited to 50";
+      gridCanBuild = false;
+    }
+  }
+
+  function testColsInput(e) {
+    let regex = /^\d{0,2}$/;
+    if (
+      regex.test(e.target.value) &&
+      Number(e.target.value) <= 75 &&
+      Number(e.target.value) > 0 &&
+      e.target.value != ""
+    ) {
+      document.getElementById("invalid").classList.add("hidden");
+      gridCanBuild = true;
+    } else {
+      document.getElementById("invalid").classList.remove("hidden");
       document.getElementById("invalid").textContent =
-        "Rows and Columns are limited to 50";
+        "Columns are limited to 75";
       gridCanBuild = false;
     }
   }
@@ -213,8 +239,8 @@
   (function () {
     document.getElementById("start").addEventListener("click", start);
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
-    rowsInput.addEventListener("input", testInput);
-    colsInput.addEventListener("input", testInput);
+    rowsInput.addEventListener("input", testRowsInput);
+    colsInput.addEventListener("input", testColsInput);
     colsInput.value = "30";
     rowsInput.value = "30";
     speedInput.value = "200";
