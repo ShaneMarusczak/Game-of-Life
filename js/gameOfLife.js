@@ -179,7 +179,7 @@
     let regex = /^\d{0,2}$/;
     if (
       regex.test(e.target.value) &&
-      Number(e.target.value) <= 50 &&
+      Number(e.target.value) <= 75 &&
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
