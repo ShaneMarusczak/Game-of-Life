@@ -1,10 +1,13 @@
 (function () {
   let gameStarted = false;
-  let gridCanBuild = true;
+  let rowsValid = true;
+  let colsValid = true;
+  let speedValid = true;
   let gridBuilt = false;
   let gameSpeed = 200;
   let rows = 30;
   let cols = 30;
+  let paused = false;
 
   const gameBoard = [];
 
@@ -125,37 +128,44 @@
   }
 
   function gameTick() {
-    const enabledCells = [];
-    for (let x = 0; x < cols + 10; x++) {
-      for (let y = 0; y < rows + 10; y++) {
-        if (gameBoard[x][y].enabled) {
-          gameBoard[x][y].setNextState();
-          enabledCells.push(gameBoard[x][y]);
+    if (!paused && gameStarted) {
+      const enabledCells = [];
+      for (let x = 0; x < cols + 10; x++) {
+        for (let y = 0; y < rows + 10; y++) {
+          if (gameBoard[x][y].enabled) {
+            gameBoard[x][y].setNextState();
+            enabledCells.push(gameBoard[x][y]);
+          }
         }
       }
+      for (let ec of enabledCells) {
+        ec.applyNextState();
+      }
+      if (!paused) {
+        sleep(gameSpeed).then(() => gameTick());
+      }
     }
-    for (let ec of enabledCells) {
-      ec.applyNextState();
-    }
-    sleep(gameSpeed).then(() => gameTick());
   }
 
   function start() {
-    if (!gameStarted && gridCanBuild && gridBuilt) {
+    if (!gameStarted && rowsValid && colsValid && speedValid && gridBuilt) {
       gameStarted = true;
-      document.getElementById("start").disabled = true;
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("speedUpbtn").classList.remove("hidden");
+      document.getElementById("slowDownbtn").classList.remove("hidden");
+      document.getElementById("pauseBtn").classList.remove("hidden");
       gameTick();
     }
   }
 
   function buildGrid(e) {
-    if (!gameStarted && gridCanBuild && !gridBuilt) {
+    if (!gameStarted && rowsValid && colsValid && speedValid && !gridBuilt) {
       gameSpeed = Number(speedInput.value);
       rows = Number(rowsInput.value);
       cols = Number(colsInput.value);
       rowsInput.disabled = true;
       colsInput.disabled = true;
-      e.target.disabled = true;
+      e.target.classList.add("hidden");
       speedInput.disabled = true;
       document.getElementById("start").disabled = false;
       document.getElementById("intro-text").classList.add("hidden");
@@ -172,12 +182,11 @@
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
-      document.getElementById("invalid").classList.add("hidden");
-      gridCanBuild = true;
+      document.getElementById("invalidRows").classList.add("hidden");
+      rowsValid = true;
     } else {
-      document.getElementById("invalid").classList.remove("hidden");
-      document.getElementById("invalid").textContent = "Rows limited to 50";
-      gridCanBuild = false;
+      document.getElementById("invalidRows").classList.remove("hidden");
+      rowsValid = false;
     }
   }
 
@@ -189,13 +198,11 @@
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
-      document.getElementById("invalid").classList.add("hidden");
-      gridCanBuild = true;
+      document.getElementById("invalidCols").classList.add("hidden");
+      colsValid = true;
     } else {
-      document.getElementById("invalid").classList.remove("hidden");
-      document.getElementById("invalid").textContent =
-        "Columns are limited to 75";
-      gridCanBuild = false;
+      document.getElementById("invalidCols").classList.remove("hidden");
+      colsValid = false;
     }
   }
 
@@ -203,18 +210,40 @@
     let regex = /^\d{0,3}$/;
     if (
       regex.test(e.target.value) &&
-      Number(e.target.value) <= 999 &&
+      Number(e.target.value) <= 500 &&
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
-      document.getElementById("invalid").classList.add("hidden");
-      gridCanBuild = true;
+      document.getElementById("invalidSpeed").classList.add("hidden");
+      speedValid = true;
     } else {
-      document.getElementById("invalid").classList.remove("hidden");
-      document.getElementById("invalid").textContent =
-        "Valid range is 1-999 whole ms";
+      document.getElementById("invalidSpeed").classList.remove("hidden");
+      speedValid = false;
+    }
+  }
 
-      gridCanBuild = false;
+  function speedUp() {
+    if (gameSpeed + 5 <= 500) {
+      gameSpeed -= 5;
+      speedInput.value = gameSpeed;
+    }
+  }
+
+  function slowDown() {
+    if (gameSpeed - 5 >= 1) {
+      gameSpeed += 5;
+      speedInput.value = gameSpeed;
+    }
+  }
+
+  function pause() {
+    if (paused) {
+      paused = false;
+      document.getElementById("pauseBtn").textContent = "Pause";
+      gameTick();
+    } else {
+      paused = true;
+      document.getElementById("pauseBtn").textContent = "Unpause";
     }
   }
 
@@ -243,6 +272,10 @@
   (function () {
     document.getElementById("start").addEventListener("click", start);
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
+    document.getElementById("speedUpbtn").addEventListener("click", speedUp);
+    document.getElementById("slowDownbtn").addEventListener("click", slowDown);
+    document.getElementById("pauseBtn").addEventListener("click", pause);
+
     rowsInput.addEventListener("input", testRowsInput);
     colsInput.addEventListener("input", testColsInput);
     colsInput.value = "30";

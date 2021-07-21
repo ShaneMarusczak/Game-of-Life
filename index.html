@@ -49,12 +49,22 @@
       <button type="button" name="buildGrid" id="buildGrid">Build Grid</button>
       <button type="button" name="start" id="start">Start</button>
       <button type="button" onclick="location.reload()">Reload</button>
+      <button type="button" name="speedUpbtn" id="speedUpbtn" class="hidden">
+        Faster
+      </button>
+      <button type="button" name="slowDownbtn" id="slowDownbtn" class="hidden">
+        Slower
+      </button>
+      <button type="button" name="pauseBtn" id="pauseBtn" class="hidden">
+        Pause
+      </button>
     </menu>
-    <p id="invalid" class="bad hidden"></p>
-
+    <p id="invalidRows" class="bad hidden">Valid range is 1-50 rows</p>
+    <p id="invalidCols" class="bad hidden">Valid range is 1-75 Columns</p>
+    <p id="invalidSpeed" class="bad hidden">Valid range is 1-500 whole ms</p>
     <div class="gameBoardWrapper">
       <div id="gameBoard_UI" class="shadowBox"></div>
     </div>
-    <p id="updateText" title="9:23 AM">Last Updated: July 20, 2021</p>
+    <p id="updateText" title="4:14 PM">Last Updated: July 21, 2021</p>
   </body>
 </html>
