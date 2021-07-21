@@ -257,15 +257,15 @@
   }
 
   function speedUp() {
-    if (gameSpeed - 5 >= 1) {
-      gameSpeed -= 5;
+    if (gameSpeed - 10 >= 1) {
+      gameSpeed -= 10;
       speedInput.value = gameSpeed;
     }
   }
 
   function slowDown() {
-    if (gameSpeed + 5 <= 500) {
-      gameSpeed += 5;
+    if (gameSpeed + 10 <= 500) {
+      gameSpeed += 10;
       speedInput.value = gameSpeed;
     }
   }
