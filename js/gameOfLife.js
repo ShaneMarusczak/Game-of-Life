@@ -204,8 +204,6 @@
 
   function testColsInput(e) {
     const regex = /^\d{0,2}$/;
-    if (!colsValid) {
-    }
     if (
       regex.test(e.target.value) &&
       Number(e.target.value) <= 75 &&
@@ -233,8 +231,6 @@
 
   function testSpeedInput(e) {
     const regex = /^\d{0,3}$/;
-    if (!speedValid) {
-    }
     if (
       regex.test(e.target.value) &&
       Number(e.target.value) <= 500 &&
