@@ -176,49 +176,86 @@
   }
 
   function testRowsInput(e) {
-    let regex = /^\d{0,2}$/;
+    const regex = /^\d{0,2}$/;
     if (
       regex.test(e.target.value) &&
       Number(e.target.value) <= 75 &&
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
-      document.getElementById("invalidRows").classList.add("hidden");
       rowsValid = true;
+      document.getElementById("invalidRows").remove();
     } else {
-      document.getElementById("invalidRows").classList.remove("hidden");
+      if (rowsValid) {
+        const message = document.createElement("p");
+        message.id = "invalidRows";
+        message.textContent = "Valid range is 1-75 rows";
+        message.classList.add("bad");
+        document
+          .getElementById("messages")
+          .insertBefore(
+            message,
+            document.getElementById("messages").firstChild
+          );
+      }
       rowsValid = false;
     }
   }
 
   function testColsInput(e) {
-    let regex = /^\d{0,2}$/;
+    const regex = /^\d{0,2}$/;
+    if (!colsValid) {
+    }
     if (
       regex.test(e.target.value) &&
       Number(e.target.value) <= 75 &&
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
-      document.getElementById("invalidCols").classList.add("hidden");
       colsValid = true;
+      document.getElementById("invalidCols").remove();
     } else {
-      document.getElementById("invalidCols").classList.remove("hidden");
+      if (colsValid) {
+        const message = document.createElement("p");
+        message.id = "invalidCols";
+        message.textContent = "Valid range is 1-75 columns";
+        message.classList.add("bad");
+        document
+          .getElementById("messages")
+          .insertBefore(
+            message,
+            document.getElementById("messages").firstChild
+          );
+      }
       colsValid = false;
     }
   }
 
   function testSpeedInput(e) {
-    let regex = /^\d{0,3}$/;
+    const regex = /^\d{0,3}$/;
+    if (!speedValid) {
+    }
     if (
       regex.test(e.target.value) &&
       Number(e.target.value) <= 500 &&
       Number(e.target.value) > 0 &&
       e.target.value != ""
     ) {
-      document.getElementById("invalidSpeed").classList.add("hidden");
       speedValid = true;
+      document.getElementById("invalidSpeed").remove();
     } else {
-      document.getElementById("invalidSpeed").classList.remove("hidden");
+      if (speedValid) {
+        const message = document.createElement("p");
+        message.id = "invalidSpeed";
+        message.textContent = "Valid range is 1-500 whole ms";
+        message.classList.add("bad");
+        document
+          .getElementById("messages")
+          .insertBefore(
+            message,
+            document.getElementById("messages").firstChild
+          );
+      }
       speedValid = false;
     }
   }

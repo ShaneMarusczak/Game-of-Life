@@ -89,6 +89,10 @@ p {
   display: none;
 }
 
+.notShown {
+  visibility: hidden;
+}
+
 .bad {
   color: red;
 }
