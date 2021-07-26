@@ -174,7 +174,6 @@
       speedInput.disabled = true;
       document.getElementById("start").disabled = false;
       document.getElementById("start").classList.remove("hidden");
-      document.getElementById("intro-text").classList.add("hidden");
       buildGridInternal();
       gridBuilt = true;
     }

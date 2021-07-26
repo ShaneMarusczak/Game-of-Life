@@ -26,6 +26,7 @@ menu {
   text-align: center;
   align-items: center;
   width: 700px;
+  min-height: 80px;
 }
 
 .speedBtns {
@@ -127,7 +128,7 @@ input[type="text"] {
 
 button {
   width: 85px;
-  height: 30px;
+  height: 35px;
 }
 
 .shadowBox {
