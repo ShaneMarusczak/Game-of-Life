@@ -129,21 +129,25 @@
 
   function gameTick() {
     if (!paused && gameStarted) {
-      const enabledCells = [];
-      for (let x = 0; x < cols + 10; x++) {
-        for (let y = 0; y < rows + 10; y++) {
-          if (gameBoard[x][y].enabled) {
-            gameBoard[x][y].setNextState();
-            enabledCells.push(gameBoard[x][y]);
-          }
-        }
-      }
-      for (let ec of enabledCells) {
-        ec.applyNextState();
-      }
+      singleStep();
       if (!paused) {
         sleep(gameSpeed).then(() => gameTick());
       }
+    }
+  }
+
+  function singleStep() {
+    const enabledCells = [];
+    for (let x = 0; x < cols + 10; x++) {
+      for (let y = 0; y < rows + 10; y++) {
+        if (gameBoard[x][y].enabled) {
+          gameBoard[x][y].setNextState();
+          enabledCells.push(gameBoard[x][y]);
+        }
+      }
+    }
+    for (let ec of enabledCells) {
+      ec.applyNextState();
     }
   }
 
@@ -154,6 +158,7 @@
       document.getElementById("speedUpbtn").classList.remove("hidden");
       document.getElementById("slowDownbtn").classList.remove("hidden");
       document.getElementById("pauseBtn").classList.remove("hidden");
+      document.getElementById("singleStepBtn").classList.remove("hidden");
       gameTick();
     }
   }
@@ -279,6 +284,9 @@
       paused = true;
       document.getElementById("pauseBtn").textContent = "Unpause";
     }
+    document.getElementById(
+      "singleStepBtn"
+    ).disabled = !document.getElementById("singleStepBtn").disabled;
   }
 
   function buildGridInternal() {
@@ -309,6 +317,11 @@
     document.getElementById("speedUpbtn").addEventListener("click", speedUp);
     document.getElementById("slowDownbtn").addEventListener("click", slowDown);
     document.getElementById("pauseBtn").addEventListener("click", pause);
+    document.getElementById("singleStepBtn").addEventListener("click", () => {
+      if (paused) {
+        singleStep();
+      }
+    });
 
     rowsInput.addEventListener("input", testRowsInput);
     colsInput.addEventListener("input", testColsInput);

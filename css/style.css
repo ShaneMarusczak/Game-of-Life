@@ -19,6 +19,26 @@ header {
   margin: 10px;
 }
 
+menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
+  width: 700px;
+}
+
+.speedBtns {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  justify-content: space-around;
+}
+
+.speedBtns button {
+  margin-bottom: 5px;
+}
+
 #githubicon {
   position: absolute;
   top: 20px;
