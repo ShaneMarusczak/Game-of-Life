@@ -159,6 +159,10 @@
       document.getElementById("slowDownbtn").classList.remove("hidden");
       document.getElementById("pauseBtn").classList.remove("hidden");
       document.getElementById("singleStepBtn").classList.remove("hidden");
+      document.querySelectorAll(".speedBtns").forEach((item) => {
+        item.classList.remove("hidden");
+      });
+
       gameTick();
     }
   }

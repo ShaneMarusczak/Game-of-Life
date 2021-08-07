@@ -1,9 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Orbitron&display=swap");
-
 * {
   padding: 0;
   margin: 0;
-  font-family: "Orbitron", sans-serif;
+  font-family: "Roboto Mono", monospace;
 }
 
 html,
@@ -11,7 +9,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: cornsilk;
+  background-color: #b0c4de;
 }
 
 header {
@@ -25,8 +23,12 @@ menu {
   justify-content: space-around;
   text-align: center;
   align-items: center;
-  width: 700px;
+  width: max-content;
   min-height: 80px;
+}
+
+label {
+  padding-left: 20px;
 }
 
 .speedBtns {
@@ -124,11 +126,14 @@ input[type="text"] {
   height: 30px;
   text-align: center;
   margin-right: 2px;
+  font-size: 1em;
 }
 
 button {
-  width: 85px;
+  width: 90px;
   height: 35px;
+  margin-left: 7px;
+  margin-right: 7px;
 }
 
 .shadowBox {
