@@ -8,8 +8,11 @@
   let rows = 30;
   let cols = 30;
   let paused = false;
+  let showEnabled = false;
 
   const gameBoard = [];
+
+  const currentEnabledCells = [];
 
   const gameBoard_UI = document.getElementById("gameBoard_UI");
   const rowsInput = document.getElementById("rowsInput");
@@ -104,8 +107,12 @@
         this.y < rows + 5
       ) {
         getCellElem(this.x, this.y).classList.remove("alive");
+        getCellElem(this.x, this.y).classList.remove("enabled");
         if (this.alive) {
           getCellElem(this.x, this.y).classList.add("alive");
+        } else if (this.enabled && showEnabled) {
+          getCellElem(this.x, this.y).classList.add("enabled");
+          currentEnabledCells.push(this);
         }
       }
     }
@@ -146,6 +153,7 @@
         }
       }
     }
+    currentEnabledCells.splice(0, currentEnabledCells.length);
     for (let ec of enabledCells) {
       ec.applyNextState();
     }
@@ -162,7 +170,6 @@
       document.querySelectorAll(".speedBtns").forEach((item) => {
         item.classList.remove("hidden");
       });
-
       gameTick();
     }
   }
@@ -333,5 +340,19 @@
     speedInput.value = "200";
     speedInput.addEventListener("input", testSpeedInput);
     document.getElementById("start").disabled = true;
+    document.getElementById("enabledInput").checked = false;
+    document.getElementById("enabledInput").addEventListener("input", () => {
+      if (paused && showEnabled) {
+        document.querySelectorAll(".enabled").forEach((elem) => {
+          elem.classList.remove("enabled");
+        });
+      }
+      showEnabled = !showEnabled;
+      if (paused && showEnabled) {
+        currentEnabledCells.forEach((cell) => {
+          getCellElem(cell.x, cell.y).classList.add("enabled");
+        });
+      }
+    });
   })();
 })();

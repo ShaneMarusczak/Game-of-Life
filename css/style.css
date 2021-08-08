@@ -27,15 +27,12 @@ menu {
   min-height: 80px;
 }
 
-label {
-  padding-left: 20px;
-}
-
 .speedBtns {
   display: flex;
   flex-direction: column;
   width: max-content;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
 }
 
 .speedBtns button {
@@ -105,7 +102,7 @@ p {
 }
 
 .alive {
-  background-color: grey;
+  background-color: dimgrey;
 }
 
 .hidden {
@@ -139,4 +136,23 @@ button {
 .shadowBox {
   box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.enabled {
+  background-color: rgba(0.49, 0.73, 0.91, 0.2);
+}
+
+#enabledLabel {
+  width: 100px;
+  font-size: small;
+}
+
+#enabledInput {
+  height: 22px;
+  width: 22px;
+}
+
+.textInputLabel {
+  margin-left: 7px;
+  margin-right: -8px;
 }
