@@ -110,8 +110,10 @@
         getCellElem(this.x, this.y).classList.remove("enabled");
         if (this.alive) {
           getCellElem(this.x, this.y).classList.add("alive");
-        } else if (this.enabled && showEnabled) {
-          getCellElem(this.x, this.y).classList.add("enabled");
+        } else if (this.enabled) {
+          if (showEnabled) {
+            getCellElem(this.x, this.y).classList.add("enabled");
+          }
           currentEnabledCells.push(this);
         }
       }
@@ -294,9 +296,7 @@
       paused = true;
       document.getElementById("pauseBtn").textContent = "Unpause";
     }
-    document.getElementById(
-      "singleStepBtn"
-    ).disabled = !document.getElementById("singleStepBtn").disabled;
+    document.getElementById("singleStepBtn").disabled = !paused;
   }
 
   function buildGridInternal() {
