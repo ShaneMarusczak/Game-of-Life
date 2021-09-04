@@ -201,7 +201,10 @@
       e.target.value != ""
     ) {
       rowsValid = true;
-      document.getElementById("invalidRows").remove();
+      let elem = document.getElementById("invalidRows");
+      if (typeof elem != "undefined" && elem != null) {
+        elem.remove();
+      }
     } else {
       if (rowsValid) {
         const message = document.createElement("p");
@@ -228,7 +231,10 @@
       e.target.value != ""
     ) {
       colsValid = true;
-      document.getElementById("invalidCols").remove();
+      let elem = document.getElementById("invalidCols");
+      if (typeof elem != "undefined" && elem != null) {
+        elem.remove();
+      }
     } else {
       if (colsValid) {
         const message = document.createElement("p");
@@ -255,7 +261,10 @@
       e.target.value != ""
     ) {
       speedValid = true;
-      document.getElementById("invalidSpeed").remove();
+      let elem = document.getElementById("invalidSpeed");
+      if (typeof elem != "undefined" && elem != null) {
+        elem.remove();
+      }
     } else {
       if (speedValid) {
         const message = document.createElement("p");
