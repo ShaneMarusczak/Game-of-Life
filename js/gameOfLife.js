@@ -198,7 +198,7 @@
       regex.test(e.target.value) &&
       Number(e.target.value) <= 75 &&
       Number(e.target.value) > 0 &&
-      e.target.value != ""
+      e.target.value !== ""
     ) {
       rowsValid = true;
       let elem = document.getElementById("invalidRows");
@@ -228,7 +228,7 @@
       regex.test(e.target.value) &&
       Number(e.target.value) <= 75 &&
       Number(e.target.value) > 0 &&
-      e.target.value != ""
+      e.target.value !== ""
     ) {
       colsValid = true;
       let elem = document.getElementById("invalidCols");
@@ -258,7 +258,7 @@
       regex.test(e.target.value) &&
       Number(e.target.value) <= 500 &&
       Number(e.target.value) > 0 &&
-      e.target.value != ""
+      e.target.value !== ""
     ) {
       speedValid = true;
       let elem = document.getElementById("invalidSpeed");

@@ -17,7 +17,7 @@ header {
   margin: 10px;
 }
 
-menu {
+#menu {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
