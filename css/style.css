@@ -83,26 +83,21 @@ p {
   margin-top: 10px;
 }
 
-#gameBoard_UI {
+#gameCanvas {
   margin: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  cursor: pointer;
 }
 
-.cell {
-  height: 17px;
-  width: 17px;
-  border: 1px dimgrey solid;
-  background-color: rgb(201, 201, 201, 0.4);
+#generationDisplay {
+  margin: 10px 0 5px 0;
+  font-size: 1.1em;
+  font-weight: 500;
 }
 
-.cell:hover {
-  background-color: dimgrey;
-}
-
-.alive {
-  background-color: dimgrey;
+#shortcutsHint {
+  margin: 0 0 5px 0;
+  font-size: 0.85em;
+  color: #555;
 }
 
 .hidden {
@@ -138,9 +133,6 @@ button {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.enabled {
-  background-color: rgba(0.49, 0.73, 0.91, 0.2);
-}
 
 #enabledLabel {
   width: 100px;
